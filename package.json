@@ -1,0 +1,12 @@
+{
+  "name": "client-cheat-quest",
+  "version": "1.0.0",
+  "description": "20 关客户端修改教学小游戏：CE扫描 / 控制台 / 存档篡改 / 源码 / 反混淆",
+  "scripts": {
+    "test": "node test/selftest.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}
