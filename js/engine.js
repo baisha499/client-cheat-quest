@@ -2,20 +2,43 @@ const Mem = {
   cells: {},
   snapshot: {},
   cand: new Set,
+  _addr() {
+    return "0x" + (4096 + Math.floor(61439 * Math.random())).toString(16).toUpperCase().padStart(4, "0");
+  },
   define(defs) {
     this.cells = {}, defs.forEach(d => {
-      const addr = "0x" + (4096 + Math.floor(61439 * Math.random())).toString(16).toUpperCase().padStart(4, "0");
       this.cells[d.key] = {
         key: d.key,
         label: d.label,
-        addr: addr,
+        addr: this._addr(),
         value: d.value,
         orig: d.value,
         decoy: !!d.decoy,
+        noise: !1,
         frozen: !1,
         frozenValue: d.value
       };
     }), this.clearScan();
+  },
+  mirror(memKey, gname) {
+    try { delete window[gname]; } catch (e) {}
+    Object.defineProperty(window, gname, {
+      configurable: !0,
+      get() { return Mem.get(memKey); },
+      set(v) { Mem.set(memKey, v); }
+    });
+  },
+  loot(anchorKey, n = 8) {
+    const anchor = this.cells[anchorKey];
+    if (!anchor) return;
+    for (let i = 0; i < n; i++) {
+      const k = "nz_" + i + "_" + Math.floor(Math.random() * 1e6);
+      this.cells[k] = {
+        key: k, label: "杂乱值" + (i + 1), addr: this._addr(),
+        value: anchor.value, orig: anchor.value,
+        decoy: !1, noise: !0, frozen: !1, frozenValue: anchor.value
+      };
+    }
   },
   get(k) {
     return this.cells[k] ? this.cells[k].value : void 0;
@@ -33,7 +56,8 @@ const Mem = {
   applyFreezes() {
     for (const k in this.cells) {
       const c = this.cells[k];
-      c.frozen && (c.value = c.frozenValue);
+      if (c.frozen) c.value = c.frozenValue;
+      else if (c.noise) c.value = c.orig + Math.floor(Math.random() * 7) - 3;
     }
   },
   snapshotNow() {
