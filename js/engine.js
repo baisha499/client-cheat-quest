@@ -2,10 +2,12 @@ const Mem = {
   cells: {},
   snapshot: {},
   cand: new Set,
+  _drift: null,
   _addr() {
     return "0x" + (4096 + Math.floor(61439 * Math.random())).toString(16).toUpperCase().padStart(4, "0");
   },
   define(defs) {
+    clearInterval(this._drift), this._drift = null;
     this.cells = {}, defs.forEach(d => {
       this.cells[d.key] = {
         key: d.key,
@@ -31,7 +33,7 @@ const Mem = {
       set(v) { Mem.set(memKey, v); }
     });
   },
-  loot(anchorKey, n = 14) {
+  loot(anchorKey, n = 20) {
     const anchor = this.cells[anchorKey];
     if (!anchor) return;
     for (let i = 0; i < n; i++) {
@@ -42,6 +44,13 @@ const Mem = {
         decoy: !1, noise: !0, frozen: !1, frozenValue: anchor.value
       };
     }
+    clearInterval(this._drift);
+    this._drift = setInterval(() => {
+      for (const k in this.cells) {
+        const c = this.cells[k];
+        if (c.noise) c.value = c.orig + Math.floor(Math.random() * 9) - 4;
+      }
+    }, 900);
   },
   get(k) {
     return this.cells[k] ? this.cells[k].value : void 0;

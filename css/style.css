@@ -48,8 +48,8 @@ body {
   padding: 4px 9px; border-radius: 8px;
   box-shadow: 0 0 18px rgba(94, 234, 212, .35);
 }
-.topbar h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .5px; font-family: var(--mono); }
-.sub { color: var(--dim2); font-size: 13px; line-height: 1.4; }
+.topbar h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .5px; font-family: var(--mono); white-space: nowrap; }
+.sub { color: var(--dim2); font-size: 13px; line-height: 1.4; width: 100%; }
 .menu-btn {
   display: none; background: var(--panel2); color: var(--txt);
   border: 1px solid var(--line); border-radius: 10px;
@@ -247,7 +247,8 @@ body {
   .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
   .sidebar {
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 60;
-    width: 280px; max-height: none; overflow-y: auto;
+    width: 280px; height: 100dvh; max-height: none; overflow-y: auto;
+    overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
     background: var(--panel); padding: 18px;
     transform: translateX(-100%); transition: transform .22s ease;
     box-shadow: 4px 0 24px rgba(0,0,0,.5);
@@ -258,6 +259,7 @@ body {
     background: rgba(0,0,0,.55); opacity: 0; pointer-events: none; transition: opacity .22s;
   }
   body.drawer-open .drawer-mask { opacity: 1; pointer-events: auto; }
+  body.drawer-open { overflow: hidden; }
 }
 
 .reset-all { width: 100%; margin-top: 14px; }
