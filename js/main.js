@@ -168,8 +168,10 @@ function renderScannerList() {
     };
     const fr = el('button', 'mini', c.frozen ? '解冻' : '冻结');
     fr.onclick = () => { Mem.freeze(c.key, !c.frozen); G && G.afterChange(); };
-    row.appendChild(edit);
-    row.appendChild(fr);
+    const act = el('span', 'scan-act');
+    act.appendChild(edit);
+    act.appendChild(fr);
+    row.appendChild(act);
     box.appendChild(row);
   });
 }

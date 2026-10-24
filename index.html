@@ -8,62 +8,66 @@
 </head>
 <body>
   <header class="topbar">
-    <h1>Client Cheat Quest</h1>
+    <div class="brand">
+      <span class="brand-mark">&gt;_</span>
+      <h1>Client Cheat Quest</h1>
+    </div>
     <span class="sub">20 关 · 靠修改客户端通关 · CE扫描 / 控制台 / 存档 / 源码 / 反混淆</span>
   </header>
 
   <div class="layout">
     <!-- 左侧关卡列表 -->
-    <nav class="sidebar">
-      <h2>关卡</h2>
+    <nav class="sidebar card-rail">
+      <h2>关卡进度</h2>
       <div id="level-list"></div>
     </nav>
 
     <!-- 中间：关卡内容 -->
     <main class="main">
-      <div class="lv-head">
+      <div class="hero card">
         <div id="lv-title" class="lv-title"></div>
         <div id="lv-method" class="lv-method"></div>
         <div id="stage-bar" class="stage-bar"></div>
         <p id="lv-brief" class="lv-brief"></p>
-        <p id="lv-goal" class="lv-goal"></p>
+        <div id="lv-goal" class="lv-goal"></div>
       </div>
 
       <section class="card">
-        <h3>场景（合法操作都在这里，正常玩过不去）</h3>
+        <h3><span class="h3-icon">⚙</span>场景 · 合法操作都在这里，正常玩过不去</h3>
         <div id="legit-panel"></div>
         <div class="row">
-          <button id="btn-hint" class="btn ghost">拿提示</button>
+          <button id="btn-hint" class="btn ghost">💡 拿提示</button>
         </div>
         <div id="hint-box" class="hint-box"></div>
       </section>
 
       <section class="card">
-        <h3>本关日志</h3>
+        <h3><span class="h3-icon">▤</span>本关日志</h3>
         <div id="level-log" class="log"></div>
       </section>
     </main>
 
     <!-- 右侧工具箱：CE扫描器 + 控制台 -->
     <aside class="tools">
-      <section class="card">
-        <h3>CE 式内存扫描器</h3>
+      <section class="card tool-card">
+        <h3><span class="h3-icon">🔍</span>CE 式内存扫描器</h3>
         <input id="scan-input" class="text-input" type="number" placeholder="输入要扫的数值" />
         <div class="grid-btns">
           <button id="btn-first" class="btn ghost">首次扫描</button>
           <button id="btn-next" class="btn ghost">再次扫描</button>
-          <button id="btn-inc" class="btn ghost">增加了</button>
-          <button id="btn-dec" class="btn ghost">减少了</button>
+          <button id="btn-inc" class="btn ghost">增加了 ↑</button>
+          <button id="btn-dec" class="btn ghost">减少了 ↓</button>
           <button id="btn-same" class="btn ghost">未变化</button>
           <button id="btn-all" class="btn ghost">全部列出(未知值)</button>
-          <button id="btn-scan-clear" class="btn ghost">清空结果</button>
+          <button id="btn-scan-clear" class="btn ghost wide">清空结果</button>
         </div>
+        <div class="scan-head"><span>地址</span><span>名称</span><span>值</span><span>操作</span></div>
         <div id="scan-results" class="scan-results"></div>
       </section>
 
-      <section class="card">
-        <h3>内置控制台（等同 F12 Console）</h3>
-        <div class="row">
+      <section class="card tool-card">
+        <h3><span class="h3-icon">❯</span>内置控制台（等同 F12 Console）</h3>
+        <div class="row console-input-row">
           <input id="console-input" class="text-input grow" placeholder="输入 JS，如 gold = 1000" />
           <button id="console-run" class="btn">运行</button>
           <button id="console-clear" class="btn ghost">清屏</button>
@@ -77,7 +81,8 @@
   <div id="win-banner" class="win-banner">
     <div class="win-card">
       <div class="win-emoji">🏁</div>
-      <div class="win-text">通关！你成功修改了客户端。</div>
+      <div class="win-title">通关！</div>
+      <div class="win-text">你成功修改了客户端，绕过了这一关。</div>
       <div class="row center">
         <button id="win-next" class="btn"></button>
         <button id="win-retry" class="btn ghost">留在本关</button>
