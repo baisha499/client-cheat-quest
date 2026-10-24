@@ -47,7 +47,7 @@ const Mem = {
     this._drift = setInterval(() => {
       for (const k in this.cells) {
         const c = this.cells[k];
-        if (c.noise) c.value = c.orig + Math.floor(Math.random() * 9) - 4;
+        if (c.noise) c.value = c.orig + Math.floor(Math.random() * 7) - 3;
       }
     }, 900);
   },
@@ -68,7 +68,7 @@ const Mem = {
     for (const k in this.cells) {
       const c = this.cells[k];
       if (c.frozen) c.value = c.frozenValue;
-      else if (c.noise) c.value = c.orig + Math.floor(Math.random() * 5) - 2;
+      else if (c.noise) c.value = c.orig + Math.floor(Math.random() * 7) - 3;
     }
   },
   snapshotNow() {
@@ -77,6 +77,8 @@ const Mem = {
   scanFirst(v) {
     this.snapshotNow(), this.cand = new Set;
     for (const k in this.cells) this.cells[k].value === v && this.cand.add(k);
+    const nz = Object.keys(this.cells).filter(k => this.cells[k].noise);
+    for (let i = 0; i < 5 && nz.length; i++) this.cand.add(nz.splice(Math.floor(Math.random() * nz.length), 1)[0]);
   },
   scanNext(v) {
     const n = new Set;
