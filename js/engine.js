@@ -20,6 +20,9 @@ const Mem = {
       };
     }), this.clearScan();
   },
+  plant() {
+    this.define([ { key: "bd", label: "隐藏后门值", value: 0 } ]);
+  },
   mirror(memKey, gname) {
     try { delete window[gname]; } catch (e) {}
     Object.defineProperty(window, gname, {

@@ -109,8 +109,12 @@ function refreshDynamic() {
   }), renderScannerList();
 }
 
+function noCells() {
+  return 0 === Object.keys(Mem.cells).length;
+}
 function bindScanner() {
   $("#btn-first").onclick = () => {
+    if (noCells()) return G && G.say("本关没有可扫描的数值，请换用控制台 / 读源码 / 改存档等手法。");
     const v = parseFloat($("#scan-input").value);
     Mem.scanFirst(v), G && G.say("首次扫描：得到 " + Mem.listCand().length + " 个结果"), renderScannerList();
   }, $("#btn-next").onclick = () => {
@@ -123,6 +127,7 @@ function bindScanner() {
   }, $("#btn-same").onclick = () => {
     Mem.scanMode("same"), G && G.say("筛选：未变化 → " + Mem.listCand().length), renderScannerList();
   }, $("#btn-all").onclick = () => {
+    if (noCells()) return G && G.say("本关没有可扫描的数值，请换用控制台 / 读源码 / 改存档等手法。");
     Mem.scanAll(), G && G.say("未知初始值：列出全部单元"), renderScannerList();
   }, $("#btn-scan-clear").onclick = () => {
     Mem.clearScan(), renderScannerList();

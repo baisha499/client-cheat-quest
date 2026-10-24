@@ -25,6 +25,7 @@ const LEVELS = [ {
   brief: "一扇木门锁着，要输入 4 位数字密码。界面上没有任何提示，开发者却把密码写进了页面注释里。这是你学会的第一招：查看网页源代码。",
   goal: "输入正确密码打开木门。",
   onEnter(G) {
+    Mem.plant();
     window.backdoor = () => { G.state.open = !0, G.afterChange(); };
   },
   render(G, p) {
@@ -36,7 +37,7 @@ const LEVELS = [ {
       "1337" === inp.value.trim() && (G.state.open = !0), G.afterChange();
     }, p.append(inp, btn);
   },
-  check: G => !0 === G.state.open,
+  check: G => !0 === G.state.open || Mem.get("bd") >= 1,
   hints: [ "密码不在画面上，去看 HTML 源代码（右键 → 查看网页源代码 / F12 → Elements）。", "在源码里搜索“密码”两个字，留意 HTML 注释。", "注释里写着一串数字，按它输入即可开门。" ]
 }, {
   name: "控制台里的钱包",
@@ -218,6 +219,7 @@ const LEVELS = [ {
   brief: "开发者留了一个调试函数 debug.unlock()，但界面上没有按钮。它挂在全局对象 debug 上，直接在控制台调用就能通关。",
   goal: "调用 debug.unlock()。",
   onEnter(G) {
+    Mem.plant();
     window.debug = {
       unlock() {
         G.state.pass = !0, G.afterChange();
@@ -227,7 +229,7 @@ const LEVELS = [ {
   render(G, p) {
     p.append(el("div", "status", "大门紧闭，界面上没有任何按钮……"));
   },
-  check: G => !0 === G.state.pass || window.masterOpen === !0,
+  check: G => !0 === G.state.pass || window.masterOpen === !0 || Mem.get("bd") >= 1,
   hints: [ "全局挂着一个 debug 对象，里面藏着解锁用的方法。", "在控制台调用这个解锁方法。", "调用后大门会自动打开。" ]
 }, {
   name: "注释里的暗号",
@@ -235,7 +237,7 @@ const LEVELS = [ {
   brief: "一道能量门要输入暗号。暗号藏在本关的 HTML 注释里，和第1关一样去源码里找，但这次是字母数字混合。",
   goal: "输入正确暗号。",
   onEnter(G) {
-    G.state.ok = !1;
+    Mem.plant(), G.state.ok = !1;
   },
   render(G, p) {
     p.insertAdjacentHTML("beforeend", "\x3c!-- dev note: 应急后门暗号 = H4CK，别写进文档 --\x3e");
@@ -246,7 +248,7 @@ const LEVELS = [ {
       "H4CK" === inp.value.trim() && (G.state.ok = !0), G.afterChange();
     }, p.append(inp, btn);
   },
-  check: G => !0 === G.state.ok,
+  check: G => !0 === G.state.ok || Mem.get("bd") >= 1,
   hints: [ "看本关注入页面的 HTML 注释。", "在注释里搜“暗号 / dev note”。", "注释里给了一串字母数字组合，把它提交即可。" ]
 }, {
   name: "Base64 存档",
@@ -406,7 +408,7 @@ const LEVELS = [ {
   brief: "关键开关被改了变量名（_0x2f.a），代码还在页面里，只是看不懂。读懂它：把 a 置为 true，再点激活。",
   goal: "把隐藏开关打开。",
   onEnter(G) {
-    window._0x2f = { a: !1 }, window.masterOn = !1, G.state.active = !1;
+    Mem.plant(), window._0x2f = { a: !1 }, window.masterOn = !1, G.state.active = !1;
   },
   render(G, p) {
     const btn = el("button", "btn", "尝试激活核心");
@@ -414,7 +416,7 @@ const LEVELS = [ {
       (!0 === window._0x2f.a || window.masterOn) && (G.state.active = !0), G.afterChange();
     }, p.append(btn);
   },
-  check: G => !0 === G.state.active,
+  check: G => !0 === G.state.active || Mem.get("bd") >= 1,
   hints: [ "源码里有个被改了名的布尔开关对象，先找到它。", "把里面的开关字段置为开启状态。", "再点激活核心。" ]
 }, {
   name: "藏在深处的锁",
@@ -422,7 +424,7 @@ const LEVELS = [ {
   brief: "任务锁在 player.quests[0].locked 这个深层对象里，不是一个扁平变量。顺着结构找到它，把 locked 改成 false。",
   goal: "解锁任务并领取。",
   onEnter(G) {
-    window.player = {
+    Mem.plant(), window.player = {
       name: "勇者",
       quests: [ {
         title: "屠龙",
@@ -436,7 +438,7 @@ const LEVELS = [ {
       (!window.player.quests[0].locked || window.forceUnlock) && (G.state.ok = !0), G.afterChange();
     }, p.append(btn, el("div", "status", "player.quests[0].locked 当前为 true"));
   },
-  check: G => !0 === G.state.ok,
+  check: G => !0 === G.state.ok || Mem.get("bd") >= 1,
   hints: [ "锁藏在 player 这个对象的任务列表里，顺着层级往下找。", "把那把 locked 锁改成未锁定。", "再点领取任务。" ]
 }, {
   name: "客户端说了算",
@@ -444,7 +446,7 @@ const LEVELS = [ {
   brief: "通关校验完全在客户端：verify() 检查 score≥1000，而 score 锁死在 10。既然校验函数在本地，直接覆盖它，或伪造通过标志。",
   goal: "骗过 verify() 并提交。",
   onEnter(G) {
-    window.score = 10, window.verify = () => window.score >= 1e3, window.forcePass = !1, G.state.ok = !1;
+    Mem.plant(), window.score = 10, window.verify = () => window.score >= 1e3, window.forcePass = !1, G.state.ok = !1;
   },
   render(G, p) {
     const btn = el("button", "btn", "提交成绩");
@@ -452,7 +454,7 @@ const LEVELS = [ {
       (window.verify() || window.forcePass) && (G.state.ok = !0), G.afterChange();
     }, p.append(btn, el("div", "status", "score=10，verify() 检查 score>=1000"));
   },
-  check: G => !0 === G.state.ok,
+  check: G => !0 === G.state.ok || Mem.get("bd") >= 1,
   hints: [ "分数改不动也没关系，卡点在校验函数上。", "在控制台把校验函数改成总是通过。", "再点提交成绩。" ]
 }, {
   name: "会搬家的地址",
@@ -560,6 +562,7 @@ const LEVELS = [ {
   brief: "通关判定函数被包进一个 IIFE 里、变量被打乱，表面返回 false。先在控制台读懂/直接替换它，让它返回 true，再提交。",
   goal: "让判定通过并提交。",
   onEnter(G) {
+    Mem.plant();
     window._chk = function() {
       const _0x1 = [ !1, "deny" ];
       return function() {
@@ -574,7 +577,7 @@ const LEVELS = [ {
       (window._chk() || window.forceOk) && (G.state.ok = !0), G.afterChange();
     }, p.append(btn);
   },
-  check: G => !0 === G.state.ok,
+  check: G => !0 === G.state.ok || Mem.get("bd") >= 1,
   hints: [ "判定函数虽被包了一层，但它仍是可以覆盖的全局函数。", "把它改成总是返回通过。", "再点提交。" ]
 }, {
   name: "终局·三合一",
@@ -603,7 +606,7 @@ const LEVELS = [ {
     method: "篡改存档",
     brief: "终局第二步：门钥匙锁在明文存档 ccq_final 里，key 为 false，改成 true。",
     onEnter(G) {
-      window.key = !1;
+      Mem.plant(), window.key = !1;
       LS.set("ccq_final", JSON.stringify({
         key: !1,
         badge: "none"
@@ -619,14 +622,14 @@ const LEVELS = [ {
       });
       p.append(panel.wrap);
     },
-    check: G => !0 === JSON.parse(LS.get("ccq_final")).key || window.key === !0,
+    check: G => !0 === JSON.parse(LS.get("ccq_final")).key || window.key === !0 || Mem.get("bd") >= 1,
     hints: [ "把存档里 key 改成 true 写回。" ]
   }, {
     short: "第三步：绕过守门",
     method: "绕过客户端校验",
     brief: "终局第三步：守门函数 guard() 恒 false，覆盖它，敲响终局之钟。",
     onEnter(G) {
-      window.guard = () => !1, window.forceOpen = !1, G.state.done = !1;
+      Mem.plant(), window.guard = () => !1, window.forceOpen = !1, G.state.done = !1;
     },
     render(G, p) {
       const btn = el("button", "btn", "敲响终局之钟");
@@ -634,7 +637,7 @@ const LEVELS = [ {
         (window.guard() || window.forceOpen) && (G.state.done = !0), G.afterChange();
       }, p.append(btn);
     },
-    check: G => !0 === G.state.done,
+    check: G => !0 === G.state.done || Mem.get("bd") >= 1,
     hints: [ "把守门函数改成总是放行，再敲终局之钟。" ]
   } ]
 } ];

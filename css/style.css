@@ -40,6 +40,7 @@ body {
   backdrop-filter: blur(10px);
   position: sticky; top: 0; z-index: 20;
 }
+.topbar-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-mark {
   font-family: var(--mono); font-weight: 700; font-size: 15px;
@@ -47,9 +48,8 @@ body {
   padding: 4px 9px; border-radius: 8px;
   box-shadow: 0 0 18px rgba(94, 234, 212, .35);
 }
-.topbar h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .5px; font-family: var(--mono); flex-shrink: 0; }
-.sub { color: var(--dim2); font-size: 13px; flex: 1; min-width: 0; }
-.brand { flex-shrink: 0; }
+.topbar h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .5px; font-family: var(--mono); }
+.sub { color: var(--dim2); font-size: 13px; line-height: 1.4; }
 .menu-btn {
   display: none; background: var(--panel2); color: var(--txt);
   border: 1px solid var(--line); border-radius: 10px;
