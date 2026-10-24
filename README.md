@@ -1,5 +1,7 @@
 # Client Cheat Quest · 20 关客户端修改训练营
 
+**在线试玩：https://baisha499.github.io/client-cheat-quest/**
+
 一个纯前端（原生 HTML/CSS/JS，零依赖）的教学小游戏：**正常玩永远过不去，必须靠修改客户端才能通关**。
 用来练习四类基础手法，再平滑过渡到编码加密存档、绕过客户端校验、反混淆等进阶手法。
 
