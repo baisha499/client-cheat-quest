@@ -1,6 +1,3 @@
-/* ============================================================
- * Client Cheat Quest — 深色终端 / CE 工具风
- * ============================================================ */
 :root {
   --bg: #080b10;
   --bg-glow1: rgba(56, 189, 248, .08);
@@ -35,7 +32,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- 顶栏 ---------- */
 .topbar {
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
   padding: 16px 24px;
@@ -54,7 +50,6 @@ body {
 .topbar h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: .5px; font-family: var(--mono); }
 .sub { color: var(--dim2); font-size: 13px; }
 
-/* ---------- 布局 ---------- */
 .layout {
   display: grid;
   grid-template-columns: 230px minmax(0, 1fr) 360px;
@@ -64,7 +59,6 @@ body {
   margin: 0 auto;
 }
 
-/* ---------- 通用卡片 ---------- */
 .card {
   background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0)), var(--panel);
   border: 1px solid var(--line);
@@ -80,7 +74,6 @@ body {
 }
 .h3-icon { color: var(--accent); font-size: 14px; }
 
-/* ---------- 侧栏关卡列表 ---------- */
 .sidebar { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 104px); overflow-y: auto; }
 .sidebar h2 { margin: 0 0 12px; font-size: 13px; color: var(--dim); letter-spacing: 1.2px; text-transform: uppercase; }
 .lv-item {
@@ -107,7 +100,6 @@ body {
 .lv-meta b { display: block; font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lv-meta i { display: block; font-style: normal; font-size: 11px; color: var(--dim2); }
 
-/* ---------- 关卡头（hero） ---------- */
 .hero { padding: 22px; border-color: rgba(94,234,212,.18); }
 .lv-title { font-size: 24px; font-weight: 800; letter-spacing: .3px; }
 .lv-method {
@@ -123,7 +115,6 @@ body {
   padding: 9px 13px; border-radius: 0 10px 10px 0;
 }
 
-/* ---------- 小关步进 ---------- */
 .stage-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 2px; }
 .stage-chip {
   background: var(--panel2); color: var(--dim);
@@ -134,7 +125,6 @@ body {
 .stage-chip.active { color: #06251f; background: var(--accent); border-color: var(--accent); font-weight: 700; }
 .stage-chip:disabled { cursor: default; opacity: .45; }
 
-/* ---------- 按钮 ---------- */
 .btn {
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: #06251f; border: none; border-radius: 10px;
@@ -156,7 +146,6 @@ body {
 }
 .mini:hover { border-color: var(--accent); color: #fff; }
 
-/* ---------- 输入 ---------- */
 .text-input {
   background: var(--bg); color: var(--txt);
   border: 1px solid var(--line); border-radius: 10px;
@@ -171,7 +160,6 @@ body {
 .status { color: var(--dim); margin: 8px 0; font-size: 14px; }
 .status span { color: var(--accent); font-family: var(--mono); font-weight: 700; }
 
-/* ---------- 日志 / 控制台 ---------- */
 .log, .console {
   background: #06090d; border: 1px solid var(--line-soft);
   border-radius: 12px; padding: 12px; height: 150px; overflow-y: auto;
@@ -186,7 +174,6 @@ body {
 .console-line.err { color: var(--err); }
 .console-input-row input { max-width: none; }
 
-/* ---------- 提示 ---------- */
 .hint-box { margin-top: 10px; }
 .hint-item {
   background: rgba(251,191,36,.06); border-left: 3px solid var(--warn);
@@ -194,7 +181,6 @@ body {
   color: #e8ddc4; font-size: 13.5px;
 }
 
-/* ---------- CE 扫描器 ---------- */
 .tool-card { position: sticky; }
 .scan-head {
   display: grid; grid-template-columns: 76px 1fr 70px 116px; gap: 8px;
@@ -218,14 +204,12 @@ body {
 .grid-btns .btn { margin: 0; padding: 8px; font-size: 13px; }
 .grid-btns .wide { grid-column: 1 / -1; }
 
-/* ---------- 存档 ---------- */
 .save-box textarea.save-raw {
   width: 100%; background: #06090d; color: var(--accent);
   border: 1px solid var(--line); border-radius: 10px;
   font-family: var(--mono); font-size: 12px; padding: 10px; resize: vertical;
 }
 
-/* ---------- 通关弹窗 ---------- */
 .win-banner {
   position: fixed; inset: 0; background: rgba(4,7,10,.7);
   backdrop-filter: blur(4px);
@@ -243,13 +227,11 @@ body {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* ---------- 滚动条 ---------- */
 ::-webkit-scrollbar { width: 9px; height: 9px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--panel3); border-radius: 9px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--line); }
 
-/* ---------- 响应式 ---------- */
 @media (max-width: 1080px) {
   .layout { grid-template-columns: 1fr; }
   .main { order: 1; }
