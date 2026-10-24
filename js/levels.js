@@ -143,7 +143,7 @@ const LEVELS = [ {
   goal: "让 coins ≥ 50 并领取奖励。",
   onEnter(G) {
     Mem.define([ { key: "coins", label: "松果数", value: 5 } ]);
-    Mem.mirror("coins", "coins");
+    Mem.loot("coins", 8), Mem.mirror("coins", "coins");
     LS.set("ccq_l5", JSON.stringify({
       coins: 5,
       need: 50,
@@ -464,7 +464,7 @@ const LEVELS = [ {
     goal: "重置后重新扫到 x 并改成 888。",
     onEnter(G) {
       Mem.define([ { key: "x", label: "数值", value: 40 } ]);
-      Mem.mirror("x", "x");
+      Mem.loot("x", 8), Mem.mirror("x", "x");
     },
     render(G, p) {
       p.append(el("div", "status", "数值："));
