@@ -11,7 +11,6 @@ const Mem = {
     this.cells = {}, defs.forEach(d => {
       this.cells[d.key] = {
         key: d.key,
-        label: d.label,
         addr: this._addr(),
         value: d.value,
         orig: d.value,
@@ -23,7 +22,7 @@ const Mem = {
     }), this.clearScan();
   },
   plant() {
-    this.define([ { key: "bd", label: "隐藏后门值", value: 0 } ]);
+    this.define([ { key: "bd", value: 0 } ]);
   },
   mirror(memKey, gname) {
     try { delete window[gname]; } catch (e) {}
@@ -39,7 +38,7 @@ const Mem = {
     for (let i = 0; i < n; i++) {
       const k = "nz_" + i + "_" + Math.floor(Math.random() * 1e6);
       this.cells[k] = {
-        key: k, label: "杂乱值" + (i + 1), addr: this._addr(),
+        key: k, addr: this._addr(),
         value: anchor.value, orig: anchor.value,
         decoy: !1, noise: !0, frozen: !1, frozenValue: anchor.value
       };
