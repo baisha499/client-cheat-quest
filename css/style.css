@@ -190,20 +190,19 @@ body {
 
 .tool-card { position: sticky; }
 .scan-head {
-  display: grid; grid-template-columns: 76px 1fr 70px 116px; gap: 8px;
+  display: grid; grid-template-columns: 76px 1fr 116px; gap: 8px;
   font-family: var(--mono); font-size: 11px; color: var(--dim2);
   padding: 6px 8px; border-bottom: 1px solid var(--line-soft);
 }
 .scan-head span { white-space: nowrap; }
 .scan-results { margin-top: 4px; max-height: 230px; overflow-y: auto; }
 .scan-row {
-  display: grid; grid-template-columns: 76px 1fr 70px 116px; gap: 8px; align-items: center;
+  display: grid; grid-template-columns: 76px 1fr 116px; gap: 8px; align-items: center;
   padding: 8px; border-bottom: 1px solid var(--line-soft);
   font-family: var(--mono); font-size: 13px; border-radius: 8px;
 }
 .scan-row:hover { background: var(--panel2); }
 .scan-row .addr { color: var(--dim2); }
-.scan-row .lbl { color: var(--txt); font-size: 12.5px; line-height: 1.3; }
 .scan-row .val { color: var(--ok); font-weight: 700; }
 .scan-act { display: flex; gap: 6px; justify-content: flex-end; }
 .scan-act .mini { margin-left: 0; }

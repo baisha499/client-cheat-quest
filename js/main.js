@@ -138,10 +138,10 @@ function renderScannerList() {
   const box = $("#scan-results");
   box.innerHTML = "", Mem.listCand().forEach(c => {
     const row = el("div", "scan-row");
-    row.innerHTML = '<span class="addr">' + c.addr + '</span><span class="lbl">' + c.label + '</span><span class="val">' + c.value + (c.frozen ? " 🔒" : "") + "</span>";
+    row.innerHTML = '<span class="addr">' + c.addr + '</span><span class="val">' + c.value + (c.frozen ? " 🔒" : "") + "</span>";
     const edit = el("button", "mini", "改值");
     edit.onclick = () => {
-      const nv = prompt("把 " + c.label + " 改成：", c.value);
+      const nv = prompt("把地址 " + c.addr + " 改成：", c.value);
       null !== nv && (Mem.set(c.key, isNaN(Number(nv)) ? nv : Number(nv)), G && G.afterChange());
     };
     const fr = el("button", "mini", c.frozen ? "解冻" : "冻结");

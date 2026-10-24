@@ -31,7 +31,7 @@ const Mem = {
       set(v) { Mem.set(memKey, v); }
     });
   },
-  loot(anchorKey, n = 8) {
+  loot(anchorKey, n = 14) {
     const anchor = this.cells[anchorKey];
     if (!anchor) return;
     for (let i = 0; i < n; i++) {
@@ -60,7 +60,7 @@ const Mem = {
     for (const k in this.cells) {
       const c = this.cells[k];
       if (c.frozen) c.value = c.frozenValue;
-      else if (c.noise) c.value = c.orig + Math.floor(Math.random() * 7) - 3;
+      else if (c.noise) c.value = c.orig + Math.floor(Math.random() * 5) - 2;
     }
   },
   snapshotNow() {
