@@ -4,6 +4,7 @@ function normalizeLevel(L) {
     method: L.method,
     brief: L.brief,
     goal: L.goal,
+    hints: L.hints,
     onEnter: L.onEnter,
     render: L.render,
     check: L.check,
@@ -19,6 +20,10 @@ const $ = sel => document.querySelector(sel);
 function el(tag, cls, text) {
   const e = document.createElement(tag);
   return cls && (e.className = cls), void 0 !== text && (e.textContent = text), e;
+}
+
+function closeDrawer() {
+  document.body.classList.remove("drawer-open");
 }
 
 let current = {
@@ -60,7 +65,7 @@ function renderShell() {
     const L = normalizeLevel(raw), p = Progress.load(), done = p.done.includes(i + 1), unlocked = i + 1 <= p.unlocked, btn = el("button", "lv-item" + (done ? " done" : "") + (unlocked ? "" : " locked") + (i === current.lvl ? " active" : ""));
     btn.innerHTML = '<span class="lv-num">' + (done ? "✓" : i + 1) + '</span><span class="lv-meta"><b>' + L.name + "</b><i>" + L.method + "</i></span>", 
     btn.onclick = () => {
-      unlocked && goto(i, 0);
+      unlocked && goto(i, 0), closeDrawer();
     }, side.appendChild(btn);
   });
 }
@@ -193,6 +198,20 @@ function onWin() {
 
 window.addEventListener("DOMContentLoaded", () => {
   bindScanner(), bindConsole(), bindHints();
+  const menuBtn = $("#menu-btn"), mask = $("#drawer-mask");
+  if (menuBtn) menuBtn.onclick = () => document.body.classList.toggle("drawer-open");
+  if (mask) mask.onclick = closeDrawer;
+  const rail = document.querySelector(".card-rail");
+  if (rail) {
+    const rb = el("button", "btn ghost reset-all", "↺ 一键重置全部进度");
+    rb.onclick = () => {
+      if (confirm("清空通关进度，并删除所有本关存档？此操作不可撤销。")) {
+        [ "ccq_progress", "ccq_l5", "ccq_l9", "ccq_l12", "ccq_l18", "ccq_final" ].forEach(k => LS.remove(k));
+        location.reload();
+      }
+    };
+    rail.appendChild(rb);
+  }
   const p = Progress.load(), start = Math.min(p.unlocked - 1, LEVELS.length - 1);
   goto(start < 0 ? 0 : start, 0);
 });
