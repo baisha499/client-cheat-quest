@@ -45,7 +45,7 @@ const LEVELS = [ {
   goal: "把金币凑到 1000 并买下钥匙。",
   onEnter(G) {
     Mem.define([ { key: "gold", label: "金币", value: 50 } ]);
-    Mem.mirror("gold", "gold"), G.state.bought = !1;
+    Mem.loot("gold", 8), Mem.mirror("gold", "gold"), G.state.bought = !1;
   },
   render(G, p) {
     p.append(el("div", "status", "当前金币："));
@@ -72,7 +72,7 @@ const LEVELS = [ {
     goal: "把练习数字改成 999。",
     onEnter(G) {
       Mem.define([ { key: "a", label: "练习数字", value: 123 } ]);
-      Mem.mirror("a", "a");
+      Mem.loot("a", 8), Mem.mirror("a", "a");
     },
     render(G, p) {
       p.append(el("div", "status", "练习数字："));
